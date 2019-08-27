@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>trouble shooting on DrizzlingCattus papers</title>
+    <link>https://drizzlingcattus.github.io/tags/trouble-shooting/</link>
+    <description>Recent content in trouble shooting on DrizzlingCattus papers</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; &lt;a href=&#34;https://github.com/natarajmb&#34;&gt;Nataraj Basappa&lt;/a&gt; 2018</copyright>
+    <lastBuildDate>Mon, 26 Aug 2019 21:18:13 +0900</lastBuildDate>
+    
+	<atom:link href="https://drizzlingcattus.github.io/tags/trouble-shooting/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>PS1 prompt setting 일대기</title>
+      <link>https://drizzlingcattus.github.io/posts/ps1-prompt-setting%EC%9D%BC%EB%8C%80%EA%B8%B0/</link>
+      <pubDate>Mon, 26 Aug 2019 21:18:13 +0900</pubDate>
+      
+      <guid>https://drizzlingcattus.github.io/posts/ps1-prompt-setting%EC%9D%BC%EB%8C%80%EA%B8%B0/</guid>
+      <description>의식의 흐름을 따라 공부하다가 PS1으로 내 작업환경을 좀더 아름답게 만드려는 시도를 하게 되었다.
+모든 문제는 나의 이 즉흥적인 공부가 항상 원인인것 같다.
+이 녀석은 내가 쉘스크립트 지식이 모자란것에 더불어 요상한 버그까지 같이 곁들여져서 내 시간을 흡수하는 블랙홀이 되었다.
+내 하루를 다 써서 결국 해결하긴했지만 아직도 분통이 터진다.
+기회가 되면 쉘스크립트 래퍼런스를 정독해야겠다.
+쉘스크립트 문자열에 대한 문법 쉘스크립트에서 문자열을 표현하면서 각기 다른 기능을 하는 3가지 문법이 존재한다.
+ Double quote (“ ”) : 이 녀석은 문자열과 평가할 수 있는 값들(변수, 함수)를 같이 섞어서 사용할 수 있다.</description>
+    </item>
+    
+  </channel>
+</rss>
