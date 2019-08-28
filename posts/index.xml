@@ -7,10 +7,23 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; &lt;a href=&#34;https://github.com/natarajmb&#34;&gt;Nataraj Basappa&lt;/a&gt; 2018</copyright>
-    <lastBuildDate>Mon, 26 Aug 2019 21:18:13 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 28 Aug 2019 12:56:26 +0900</lastBuildDate>
     
 	<atom:link href="https://drizzlingcattus.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>왜 Function.prototype.apply.apply를 사용하는가?</title>
+      <link>https://drizzlingcattus.github.io/posts/function-apply-apply/</link>
+      <pubDate>Wed, 28 Aug 2019 12:56:26 +0900</pubDate>
+      
+      <guid>https://drizzlingcattus.github.io/posts/function-apply-apply/</guid>
+      <description>jasmine이라는 TDD 라이브러리의 구현을 살펴보는 도중에 약간 이해가 안되는 코드를 발견했다.
+// … return Function.prototype.apply.apply(timer.setInterval, [global, arguments]); // … return Function.prototype.call.apply(timer.clearTimeout, [global, id]);  이런 코드가 있었는데, 처음에 드는 생각은 “Function.prototype.apply.apply(timer.setInterval, [global, arguments]) 는 timer.setInterval.apply(global, arguments) 랑 같은데 왜 굳이 저렇게 장황하게 써야하나?” 였다.
+이유는 낮은 버젼의 IE와의 호환성 문제 때문이였다.
+위의 timer.setInterval은 브라우져 구현의 timer객체 혹은 자체 구현한 객체를 지칭하는데, IE의 경우에 문제가 생겨서 위처럼 구현해둔것이다.
+개인적으로 너무 끔찍하다.</description>
+    </item>
     
     <item>
       <title>PS1 prompt setting 일대기</title>
@@ -25,15 +38,6 @@
 기회가 되면 쉘스크립트 래퍼런스를 정독해야겠다.
 쉘스크립트 문자열에 대한 문법 쉘스크립트에서 문자열을 표현하면서 각기 다른 기능을 하는 3가지 문법이 존재한다.
  Double quote (“ ”) : 이 녀석은 문자열과 평가할 수 있는 값들(변수, 함수)를 같이 섞어서 사용할 수 있다.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://drizzlingcattus.github.io/posts/boostcamp-%EB%A9%9C%ED%8C%85%ED%8C%9F%ED%9A%8C%EA%B3%A0/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://drizzlingcattus.github.io/posts/boostcamp-%EB%A9%9C%ED%8C%85%ED%8C%9F%ED%9A%8C%EA%B3%A0/</guid>
-      <description>title: &amp;quot;PS1 prompt setting 일대기&amp;quot; date: 2019-08-27T17:30:13+09:00 draft: true tags: - boostcamp - retrospect  </description>
     </item>
     
   </channel>

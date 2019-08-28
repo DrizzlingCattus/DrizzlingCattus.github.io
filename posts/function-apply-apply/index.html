@@ -6,7 +6,7 @@
 
 
 
-<title> | DrizzlingCattus papers</title>
+<title>왜 Function.prototype.apply.apply를 사용하는가? | DrizzlingCattus papers</title>
 
 <link rel="stylesheet" href="https://drizzlingcattus.github.io//css/styles.css">
 
@@ -67,16 +67,30 @@ integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbi
   </div>
 
 <div class="container">
-  <h2 class="subtitle is-6">January 1, 0001</h2>
-  <h1 class="subtitle is-size-4-mobile is-size-3-desktop"></h1>
+  <h2 class="subtitle is-6">August 28, 2019</h2>
+  <h1 class="subtitle is-size-4-mobile is-size-3-desktop">왜 Function.prototype.apply.apply를 사용하는가?</h1>
   <div class="content">
-    <pre><code>title: &quot;PS1 prompt setting 일대기&quot;
-date: 2019-08-27T17:30:13+09:00
-draft: true
-tags:
-- boostcamp
-- retrospect
+    <p>jasmine이라는 TDD 라이브러리의 구현을 살펴보는 도중에 약간 이해가 안되는 코드를 발견했다.</p>
+
+<pre><code class="language-javascript">// … 
+
+return Function.prototype.apply.apply(timer.setInterval, [global, arguments]); 
+
+ 
+// … 
+
+return Function.prototype.call.apply(timer.clearTimeout, [global, id]); 
 </code></pre>
+
+<p>이런 코드가 있었는데, 처음에 드는 생각은 “<code>Function.prototype.apply.apply(timer.setInterval, [global, arguments])</code> 는 <code>timer.setInterval.apply(global, arguments)</code> 랑 같은데 왜 굳이 저렇게 장황하게 써야하나?” 였다.</p>
+
+<p>이유는 낮은 버젼의 IE와의 호환성 문제 때문이였다.</p>
+
+<p><img src="/posts/function-apply-apply-1.png" alt="Example image" /></p>
+
+<p>위의 timer.setInterval은 브라우져 구현의 timer객체 혹은 자체 구현한 객체를 지칭하는데, IE의 경우에 문제가 생겨서 위처럼 구현해둔것이다.</p>
+
+<p>개인적으로 너무 끔찍하다.</p>
 
   </div>
 </div>

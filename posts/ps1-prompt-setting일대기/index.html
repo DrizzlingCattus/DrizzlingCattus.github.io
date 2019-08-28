@@ -141,7 +141,7 @@ integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbi
 
 <p>p.s.) setaf는 Terminal에 따라서 setf를 쓰는 경우도 있다고한다. 정확히는 잘&hellip;</p>
 
-<p>이렇게 작성했는데, 이 코드 앞뒤로 [, ]을 각각 추가해야했다.</p>
+<p>이렇게 작성했는데, 이 코드 앞뒤로 \[, \]을 각각 추가해야했다.</p>
 
 <p>저 문자열을 통해서 Color를 지정하는 명령을 구분할 수 있게되는데, 기입을 안해서 문제가 발생한 것이다.</p>
 
@@ -157,14 +157,14 @@ integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbi
 
 <p>원인은 간단했다.</p>
 
-<p>보통 색상은 [&lt;색상에 대한 구문&gt;&lt;색상 적용시킬 대상&gt;] 이런 구문으로 적용시키는데, 지금 색상을 정의하는 변수가 다음과 같이 되있었다.</p>
+<p>보통 색상은 \[&lt;색상에 대한 구문&gt;&lt;색상 적용시킬 대상&gt;\] 이런 구문으로 적용시키는데, 지금 색상을 정의하는 변수가 다음과 같이 되있었다.</p>
 
 <pre><code class="language-bash">red=“\[$(tput setaf 1)\]” 
 
 (…more…)
 </code></pre>
 
-<p>즉 ‘색상을 적용시킬 대상’이 ] 앞에 있어야하는데 없다는 것이다.</p>
+<p>즉 ‘색상을 적용시킬 대상’이 \] 앞에 있어야하는데 없다는 것이다.</p>
 
 <p>이때까지는 문제가 없어서 그런가보다하고 넘어갔는데</p>
 
@@ -172,7 +172,7 @@ integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbi
 
 <p>(정확히 왜 안됬는지는 모르겠다. 뭔가 또 예외적인 규칙때문인가?)</p>
 
-<p>일단 해결하기위해 [ ]를 빼서 [\$(function)]같이 사용하고 색상을 입히는 함수를 따로 만들어서 적용시켰더니 해결되었다.</p>
+<p>일단 해결하기위해 \[ \]를 빼서 \[\$(function)\]같이 사용하고 색상을 입히는 함수를 따로 만들어서 적용시켰더니 해결되었다.</p>
 
 <p>결과적으로 코드를 더 깔끔하게 구성이 가능하게 됐다.</p>
 
