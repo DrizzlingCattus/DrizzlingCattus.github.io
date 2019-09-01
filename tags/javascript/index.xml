@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>javascript on DrizzlingCattus papers</title>
+    <link>https://drizzlingcattus.github.io/tags/javascript/</link>
+    <description>Recent content in javascript on DrizzlingCattus papers</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; &lt;a href=&#34;https://github.com/natarajmb&#34;&gt;Nataraj Basappa&lt;/a&gt; 2018</copyright>
+    <lastBuildDate>Sun, 01 Sep 2019 22:11:44 +0900</lastBuildDate>
+    
+	<atom:link href="https://drizzlingcattus.github.io/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title></title>
+      <link>https://drizzlingcattus.github.io/posts/browser-import-export-namespace-test/</link>
+      <pubDate>Sun, 01 Sep 2019 22:11:44 +0900</pubDate>
+      
+      <guid>https://drizzlingcattus.github.io/posts/browser-import-export-namespace-test/</guid>
+      <description>문득, javascript 코드를 작성하다가 es6 import/export가 동작하는 방식을 좀더 이해해야할 필요성을 느끼게 되었다. 그래서 간단한 테스트를 통해서 변수의 선언과 해당 선언이 중복되었을때 어떻게 처리하는가 알아보기로 했다.
+const 중복선언 일단 처음은 예측이 가능한 경우를 테스트해보기로 했다. const 변수를 다른 JS파일에 같은 이름으로 선언을 해서 import 시킬때 어떻게 처리하는지 확인해보았다.
+// index.js import {test} from &#39;./first.js&#39;; const test = &#39;index.js&#39;; console.log(test);  // first.js const test = &#39;first.js&#39;; export { test };  결과는 당연히 변수를 재선언했다고 Syntax Error를 발생시켰다.</description>
+    </item>
+    
+  </channel>
+</rss>

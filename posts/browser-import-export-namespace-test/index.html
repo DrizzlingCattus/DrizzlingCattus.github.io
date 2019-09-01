@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+<title> | DrizzlingCattus papers</title>
+
+<link rel="stylesheet" href="https://drizzlingcattus.github.io//css/styles.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" 
+integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/zenburn.min.css" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="https://drizzlingcattus.github.io//js/highlight.js"></script>
+
+
+
+<link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.jssocials/1.4.0/jssocials.css" />
+<link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.jssocials/1.4.0/jssocials-theme-minima.css" />
+<script type="text/javascript" src="https://drizzlingcattus.github.io//js/jssocials.js"></script>
+
+
+
+
+<div class="container">
+    <nav class="navbar level">
+      <div class="navbar-brand">
+          <a class="nav-item" href="https://drizzlingcattus.github.io/"><h1 class="title is-3">DrizzlingCattus papers</h1></a>
+      </div>           
+      <div class="navbar-menu has-text-centered is-active">
+          <div class="navbar-end is-centered">
+              
+                <a href="https://drizzlingcattus.github.io/about" rel="me">
+                  <span class="icon">
+                    <i class="fas fa-info"></i>
+                  </span>
+                </a>
+              
+                <a href="https://github.com/DrizzlingCattus/" rel="me">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                </a>
+              
+                <a href="https://drizzlingcattus.github.io/" rel="me">
+                  <span class="icon">
+                    <i class="fab fa-linkedin-in"></i>
+                  </span>
+                </a>
+              
+                <a href="https://drizzlingcattus.github.io/" rel="me">
+                  <span class="icon">
+                    <i class="fab fa-twitter"></i>
+                  </span>
+                </a>
+              
+           </div>
+      </div>
+    </nav>
+  </div>
+
+<div class="container">
+  <h2 class="subtitle is-6">September 1, 2019</h2>
+  <h1 class="subtitle is-size-4-mobile is-size-3-desktop"></h1>
+  <div class="content">
+    
+
+<p>문득, javascript 코드를 작성하다가 es6 import/export가 동작하는 방식을 좀더 이해해야할 필요성을 느끼게 되었다. 그래서 간단한 테스트를 통해서 변수의 선언과 해당 선언이 중복되었을때 어떻게 처리하는가 알아보기로 했다.</p>
+
+<h3 id="const-중복선언">const 중복선언</h3>
+
+<p>일단 처음은 예측이 가능한 경우를 테스트해보기로 했다. const 변수를 다른 JS파일에 같은 이름으로 선언을 해서 import 시킬때 어떻게 처리하는지 확인해보았다.</p>
+
+<pre><code class="language-javascript">// index.js
+
+import {test} from './first.js';
+
+const test = 'index.js';
+
+console.log(test);
+</code></pre>
+
+<pre><code class="language-javascript">// first.js
+
+const test = 'first.js';
+
+export { test };
+</code></pre>
+
+<p>결과는 당연히 변수를 재선언했다고 Syntax Error를 발생시켰다.</p>
+
+<h3 id="var-중복선언">var 중복선언</h3>
+
+<p>그렇다면, var를 중복선언하게되면 어떻게 될까?</p>
+
+<p>기본적으로 JS에서 var의 중복선언은 에러를 발생시키지 않는다. 그래서 나도 var로 중복선언한 변수를 import시키는 것은 문제가 발생하지 않을것이라고 생각을 했다. 하지만 결과는 달랐다.</p>
+
+<pre><code class="language-javascript">// index.js
+
+import {test} from './second.js';
+
+var test = 'index.js';
+
+console.log(test);
+</code></pre>
+
+<pre><code class="language-javascript">// second.js
+
+var test = 'second.js';
+
+export { test };
+</code></pre>
+
+<p>결과는 첫번째 경우와 마찬가지로 Syntax Error를 발생시켰다.</p>
+
+<p>&ldquo;어 그렇다면, import시킨게 const처럼 선언이 되는건가?&ldquo;라는 생각이 들어서 index.js를 살짝 바꿔서 다음처럼 테스트해보았다.</p>
+
+<pre><code class="language-javascript">// index.js
+
+var test = 'index.js';
+
+import {test} from './second.js';
+
+console.log(test);
+</code></pre>
+
+<p>이때의 나는 &lsquo;이렇게 var를 위쪽에 선언하면 이후에 const 선언은 var선언을 덮어씌우겠지?&rsquo; 라는 착각을 하고 있었다. (되도록이면 const나 let만 사용하는 버릇이 이런 착각을 만들었다.) 하지만, const는 var선언에 대해서도 변수 재선언을 막았다. 그래서 여전히 Syntax Error를 발생했다.</p>
+
+<h3 id="결론">결론</h3>
+
+<p>위의 내용을 종합해보면, import/export를 할때 변수가 중복선언되어서 값이 덮어씌워지는 경우를 걱정할 필요 없이 사용할 수 있겠다는 생각이 들었다.</p>
+
+<p>p.s.) 추가적으로 var선언을 하면 hoisting되어서 무조건 const위로 선언이 올라갈텐데, 왜 var선언을 덮어씌운다는 생각따위를 한건지 모르겠다.</p>
+
+  </div>
+</div>
+<div class="container has-text-centered">
+    
+    <aside><div id="share"></div></aside>
+    <script type="text/javascript">
+        $("#share").jsSocials({
+            showLabel: false,
+            showCount: false,
+            shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"]
+        });
+    </script>
+    
+</div>
+
+<div class="container has-text-centered">
+  
+</div>
+<section class="section">
+  <div class="container has-text-centered">
+    <p>&copy; <a href="https://github.com/natarajmb">Nataraj Basappa</a> 2018</p>
+  </div>
+</section>
+
+

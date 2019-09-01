@@ -3,27 +3,52 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://drizzlingcattus.github.io/posts/browser-import-export-namespace-test/</loc>
+    <lastmod>2019-09-01T22:11:44+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://drizzlingcattus.github.io/tags/broswer/</loc>
+    <lastmod>2019-09-01T22:11:44+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://drizzlingcattus.github.io/</loc>
+    <lastmod>2019-09-01T22:11:44+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://drizzlingcattus.github.io/tags/es6/</loc>
+    <lastmod>2019-09-01T22:11:44+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://drizzlingcattus.github.io/tags/javascript/</loc>
+    <lastmod>2019-09-01T22:11:44+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://drizzlingcattus.github.io/posts/</loc>
+    <lastmod>2019-09-01T22:11:44+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://drizzlingcattus.github.io/tags/</loc>
+    <lastmod>2019-09-01T22:11:44+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://drizzlingcattus.github.io/tags/test/</loc>
+    <lastmod>2019-09-01T22:11:44+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://drizzlingcattus.github.io/tags/code-exploration/</loc>
     <lastmod>2019-08-28T12:56:26+09:00</lastmod>
   </url>
   
   <url>
-    <loc>https://drizzlingcattus.github.io/</loc>
-    <lastmod>2019-08-28T12:56:26+09:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://drizzlingcattus.github.io/tags/jasmine/</loc>
-    <lastmod>2019-08-28T12:56:26+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://drizzlingcattus.github.io/posts/</loc>
-    <lastmod>2019-08-28T12:56:26+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://drizzlingcattus.github.io/tags/</loc>
     <lastmod>2019-08-28T12:56:26+09:00</lastmod>
   </url>
   
