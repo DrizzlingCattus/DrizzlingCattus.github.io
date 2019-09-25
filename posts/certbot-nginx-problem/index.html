@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+<title>Certbot Nginx Problem | DrizzlingCattus papers</title>
+
+<link rel="stylesheet" href="https://drizzlingcattus.github.io//css/styles.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" 
+integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/zenburn.min.css" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="https://drizzlingcattus.github.io//js/highlight.js"></script>
+
+
+
+<link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.jssocials/1.4.0/jssocials.css" />
+<link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.jssocials/1.4.0/jssocials-theme-minima.css" />
+<script type="text/javascript" src="https://drizzlingcattus.github.io//js/jssocials.js"></script>
+
+
+
+
+<div class="container">
+    <nav class="navbar level">
+      <div class="navbar-brand">
+          <a class="nav-item" href="https://drizzlingcattus.github.io/"><h1 class="title is-3">DrizzlingCattus papers</h1></a>
+      </div>           
+      <div class="navbar-menu has-text-centered is-active">
+          <div class="navbar-end is-centered">
+              
+                <a href="https://drizzlingcattus.github.io/about" rel="me">
+                  <span class="icon">
+                    <i class="fas fa-info"></i>
+                  </span>
+                </a>
+              
+                <a href="https://github.com/DrizzlingCattus/" rel="me">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                </a>
+              
+                <a href="https://drizzlingcattus.github.io/" rel="me">
+                  <span class="icon">
+                    <i class="fab fa-linkedin-in"></i>
+                  </span>
+                </a>
+              
+                <a href="https://drizzlingcattus.github.io/" rel="me">
+                  <span class="icon">
+                    <i class="fab fa-twitter"></i>
+                  </span>
+                </a>
+              
+           </div>
+      </div>
+    </nav>
+  </div>
+
+<div class="container">
+  <h2 class="subtitle is-6">September 26, 2019</h2>
+  <h1 class="subtitle is-size-4-mobile is-size-3-desktop">Certbot Nginx Problem</h1>
+  <div class="content">
+    
+
+<h2 id="문제-상황">문제 상황</h2>
+
+<p>Let&rsquo;s Encrypt에서 만든 인증서가 계속 만기되기 일보직전이라는 메일을 보내왔다.</p>
+
+<p>이상하다. 분명 crontab에 자동으로 갱신되도록 명령을 넣어뒀는데&hellip; 모종의 이유로 실패한 모양이다.</p>
+
+<p>로그를 살펴보니 <code>nginx restart fail</code>이라고 강렬하게 낙인이 찍혀있었다.</p>
+
+<p>뭔가 nginx와 소통이 안되는게 분명하다.</p>
+
+<h2 id="해결-과정">해결 과정</h2>
+
+<p>먼저 nginx가 잘돌아가고 있는지 살펴보기위해 서비스 상태를 살펴봤다.</p>
+
+<pre><code class="language-shell">[root@goldilocks nginx]# systemctl status nginx.service
+● nginx.service - The nginx HTTP and reverse proxy server
+   Loaded: loaded (/usr/lib/systemd/system/nginx.service; disabled; vendor preset: disabled)
+   Active: failed (Result: exit-code) since Wed 2019-09-25 15:07:05 UTC; 6min ago
+  Process: 29776 ExecStart=/usr/sbin/nginx (code=exited, status=1/FAILURE)
+  Process: 29774 ExecStartPre=/usr/sbin/nginx -t (code=exited, status=0/SUCCESS)
+  Process: 29773 ExecStartPre=/usr/bin/rm -f /run/nginx.pid (code=exited, status=0/SUCCESS)
+</code></pre>
+
+<p>응? Active 상태가 fail이다. 이럴수가 정말 뭔가 문제가 있다.</p>
+
+<p>더 상태를 살펴보니 다음과 같은 로그가 있었다.</p>
+
+<pre><code class="language-shell">Sep 25 15:07:04 goldilocks nginx[29776]: nginx: [emerg] bind() to [::]:443 failed (98: Address already in use)
+Sep 25 15:07:05 goldilocks nginx[29776]: nginx: [emerg] bind() to 0.0.0.0:80 failed (98: Address already in use)
+Sep 25 15:07:05 goldilocks nginx[29776]: nginx: [emerg] bind() to [::]:80 failed (98: Address already in use)
+Sep 25 15:07:05 goldilocks nginx[29776]: nginx: [emerg] bind() to 0.0.0.0:443 failed (98: Address already in use)
+Sep 25 15:07:05 goldilocks nginx[29776]: nginx: [emerg] bind() to [::]:443 failed (98: Address already in use)
+Sep 25 15:07:05 goldilocks systemd[1]: nginx.service: control process exited, code=exited status=1
+Sep 25 15:07:05 goldilocks nginx[29776]: nginx: [emerg] still could not bind()
+Sep 25 15:07:05 goldilocks systemd[1]: Failed to start The nginx HTTP and reverse proxy server.
+Sep 25 15:07:05 goldilocks systemd[1]: Unit nginx.service entered failed state.
+Sep 25 15:07:05 goldilocks systemd[1]: nginx.service failed.
+</code></pre>
+
+<p>아하 문제는 80번 및 443번 포트를 누군가 사용중이라서 nginx가 사용해야하는데 못사용한게 분명했다.</p>
+
+<p>어? 그런데 80번이랑 443번은 nginx만 사용하지않았던가? 그래서 포트 사용하는 녀석을 살펴보기로했다.</p>
+
+<pre><code class="language-shell">[root@goldilocks nginx]# lsof -i
+COMMAND     PID      USER   FD   TYPE   DEVICE SIZE/OFF NODE NAME
+nginx     22234      root    6u  IPv4   278094      0t0  TCP *:http (LISTEN)
+nginx     22234      root    7u  IPv6   278095      0t0  TCP *:http (LISTEN)
+nginx     22234      root    8u  IPv4   278096      0t0  TCP *:https (LISTEN)
+nginx     22234      root    9u  IPv6   278097      0t0  TCP *:https (LISTEN)
+</code></pre>
+
+<p>어 요놈봐라.. 분명 서비스 상태는 죽어있는데, 이렇게 보란듯이 프로세스가 남아있다.</p>
+
+<p>왜 nginx가 이런모양이 됐는지는 모르겠지만, 일단 남아있는 프로세스들은 서비스에 의해서 최신화된 버전의 프로세스는 아닌게 분명하다.</p>
+
+<p>해당녀석들을 죽이고 다시 서비스를 시작하니 원활하게 잘 동작했다.</p>
+
+<p>그런데 여전히 Let&rsquo;s Encrypt의 인증서 갱신이 되질 않았다.</p>
+
+<p>그리고 다음과같은 글을 보고 해답을 얻었다.</p>
+
+<pre><code class="language-markdown">So, --standalone conflicts with having nginx listen on port 80, 
+which your nginx configuration is now doing. 
+That’s the root of your renewal problem: 
+when you originally got the certificate, port 80 wasn’t used by nginx, 
+but now it is.
+
+We often say that --standalone is meant for use on machines 
+that aren’t running a web server. 
+However, if a machine starts running a web server 
+after the certificate is issued, --standalone may then stop working.
+
+There are basically two solutions available:
+
+(1) You can temporarily stop and restart nginx when doing certificate renewals. 
+There is a way to get Certbot to remember to do this for you with hooks, 
+so that certbot renew will still work 
+and will temporarily stop nginx for the duration of the renewal authentication. 
+In this case, you can keep using --standalone 
+because port 80 will become free temporarily during the renewal.
+
+(2) You can change the authentication method to something other than --standalone 
+(for example --nginx as of 0.21 should be fine, 
+or --webroot if your configuration serves static files rather than proxying requests to a web app… 
+which it looks like would be a problem for you in this configuration 
+unless you configured an exception to the proxy_pass for the /.well-known/acme-challenge URL path).
+</code></pre>
+
+<p>요지는 80번 포트를 통해서 인증서 갱신을 하게되는데, nginx 설정때문에 80번 포트를 통해서 통신을 할 수가 없는게 문제라는 것이다.</p>
+
+<p>그러고보니 nginx를 reverse proxy용도로 사용하고있어서 80번 포트가 443번 포트로 redirect가 된다는 사실이 기억났다.</p>
+
+<p>해결책으로 잠시 nginx를 중지시키고 인증서 갱신을 하면 된다고 해서 그대로 해보니 잘됐다.</p>
+
+<p>자동으로 갱신하는 작업은 뭔가 /var/run/nginx.pid 혹은 /run/nginx.pid 관련해서 살펴봐야할 것같다.</p>
+
+<p>저 파일에 있는 nginx pid를 통해서 nginx 프로세르의 재시작, 중지 등을 수행하는 것같은데, 저 파일이 없어서 nginx -s 옵션을 통해서 프로세스를 조절하려고하면 해당 파일이 없다고 아무것도 못한다고 응답을 준다.</p>
+
+<p>정상적으로 nginx가 구동된다면, 저 파일이 nginx에 의해서 제대로 관리가 되어야할 것이다.</p>
+
+<p>그런데 없는걸보니 비정상적으로 종료가 된듯하다.</p>
+
+<p>다른 로그들을 살펴보고 nginx 서비스가 무슨 이유로 죽었는지 알아내야겠다.</p>
+
+  </div>
+</div>
+<div class="container has-text-centered">
+    
+    <aside><div id="share"></div></aside>
+    <script type="text/javascript">
+        $("#share").jsSocials({
+            showLabel: false,
+            showCount: false,
+            shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"]
+        });
+    </script>
+    
+</div>
+
+<div class="container has-text-centered">
+  
+</div>
+<section class="section">
+  <div class="container has-text-centered">
+    <p>&copy; <a href="https://github.com/natarajmb">Nataraj Basappa</a> 2018</p>
+  </div>
+</section>
+
+

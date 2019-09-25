@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>nginx on DrizzlingCattus papers</title>
+    <link>https://drizzlingcattus.github.io/tags/nginx/</link>
+    <description>Recent content in nginx on DrizzlingCattus papers</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; &lt;a href=&#34;https://github.com/natarajmb&#34;&gt;Nataraj Basappa&lt;/a&gt; 2018</copyright>
+    <lastBuildDate>Thu, 26 Sep 2019 00:55:29 +0900</lastBuildDate>
+    
+	<atom:link href="https://drizzlingcattus.github.io/tags/nginx/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Certbot Nginx Problem</title>
+      <link>https://drizzlingcattus.github.io/posts/certbot-nginx-problem/</link>
+      <pubDate>Thu, 26 Sep 2019 00:55:29 +0900</pubDate>
+      
+      <guid>https://drizzlingcattus.github.io/posts/certbot-nginx-problem/</guid>
+      <description>문제 상황 Let&amp;rsquo;s Encrypt에서 만든 인증서가 계속 만기되기 일보직전이라는 메일을 보내왔다.
+이상하다. 분명 crontab에 자동으로 갱신되도록 명령을 넣어뒀는데&amp;hellip; 모종의 이유로 실패한 모양이다.
+로그를 살펴보니 nginx restart fail이라고 강렬하게 낙인이 찍혀있었다.
+뭔가 nginx와 소통이 안되는게 분명하다.
+해결 과정 먼저 nginx가 잘돌아가고 있는지 살펴보기위해 서비스 상태를 살펴봤다.
+[root@goldilocks nginx]# systemctl status nginx.service ● nginx.service - The nginx HTTP and reverse proxy server Loaded: loaded (/usr/lib/systemd/system/nginx.service; disabled; vendor preset: disabled) Active: failed (Result: exit-code) since Wed 2019-09-25 15:07:05 UTC; 6min ago Process: 29776 ExecStart=/usr/sbin/nginx (code=exited, status=1/FAILURE) Process: 29774 ExecStartPre=/usr/sbin/nginx -t (code=exited, status=0/SUCCESS) Process: 29773 ExecStartPre=/usr/bin/rm -f /run/nginx.</description>
+    </item>
+    
+  </channel>
+</rss>
